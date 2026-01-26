@@ -1,0 +1,318 @@
+{
+  title: 'Lms Credit Report',
+
+  <%= File.read('../../lib/lms/api_connection.rb') %>,
+
+  actions: {
+    create_report: {
+      title: "Create Report",
+      subtitle: "Create Report",
+      description: "",
+
+      input_fields: lambda do
+        [
+          {
+            name: "file_contents",
+            label: "File Contents",
+            optional: false,
+            sticky: true
+          }
+        ]
+      end,
+
+      execute: lambda do |connection, input, eis, eos, closure|       
+        query_object = {
+           "query" => {
+             "bool" => {
+               "must" => [],
+               "filter" => {}
+             }
+           }
+         }
+        
+        #  query_object["query"]["bool"]["must"] << { "match" => { "firstName" => input["firstName"] } } if input["firstName"]
+        
+        
+         post("Customers/Autopal.Search()")
+         .payload(query_object)
+         .params({
+           "$top" => input["$top"] || 25,  # Default to 25 if not provided
+           "$start" => input["$start"] || 0,  # Default to 0 if not provided
+           "$orderby" => input["$orderby"] || "firstName"
+         })
+      end,
+
+       output_fields: lambda do
+         [
+           {
+             name: "Customers",
+             type: "array",
+             of: "object",
+             properties: [
+               { name: "lastName", label: "Last Name", type: "string" },
+               { name: "hasEmployer", label: "Has Employer", type: "integer" },
+               { name: "gender", label: "Gender", type: "string" },
+               { name: "loansCount", label: "Loans Count", type: "integer" },
+               { name: "customFields", label: "Custom Fields", type: "object" },
+               { name: "dynamicProperties", label: "Dynamic Properties", type: "array", of: "object" },
+               { name: "companyName", label: "Company Name", type: "string" },
+               { name: "primaryPhoneDnd", label: "Primary Phone DND", type: "string" },
+               { name: "customId", label: "Custom ID", type: "string" },
+               { name: "ssn", label: "SSN", type: "string" },
+               { name: "customerType", label: "Customer Type", type: "string" },
+               { name: "paymentAccountsCount", label: "Payment Accounts Count", type: "integer" },
+               { name: "customerId", label: "Customer ID", type: "string" },
+               { name: "creditLimit", label: "Credit Limit", type: "string" },
+               { name: "employer", label: "Employer", type: "string" },
+               { name: "id", label: "ID", type: "string" },
+               { name: "email", label: "Email", type: "string" },
+               { name: "creditScore", label: "Credit Score", type: "integer" },
+               { name: "referencesCount", label: "References Count", type: "integer" },
+               { name: "contactName", label: "Contact Name", type: "string" },
+               { name: "created", label: "Created Date", type: "string" },
+               { name: "ofacCompliance", label: "OFAC Compliance", type: "string" },
+               { name: "birthDate", label: "Birth Date", type: "string" },
+               { name: "customerName", label: "Customer Name", type: "string" },
+               { name: "hasAvatar", label: "Has Avatar", type: "string" },
+               { name: "firstName", label: "First Name", type: "string" },
+               { name: "primaryPhone", label: "Primary Phone", type: "string" },
+               { name: "ofactTested", label: "OFAC Tested", type: "string" },
+               { name: "smsVerified", label: "SMS Verified", type: "integer" },
+               { name: "middleName", label: "Middle Name", type: "string" },
+               { name: "saleTransferPii", label: "Sale Transfer PII", type: "integer" },
+               { name: "accessUsername", label: "Access Username", type: "string" },
+               {
+                 name: "primaryAddress",
+                 label: "Primary Address",
+                 type: "object",
+                 properties: [
+                   { name: "zipcode", label: "Zip Code", type: "string" },
+                   { name: "country", label: "Country", type: "string" },
+                   { name: "isVerified", label: "Address Verified", type: "string" },
+                   { name: "city", label: "City", type: "string" },
+                   { name: "address1", label: "Address Line 1", type: "string" },
+                   { name: "state", label: "State", type: "string" }
+                 ]
+               },
+               { name: "ofactMatch", label: "OFAC Match", type: "string" },
+               { name: "age", label: "Age", type: "integer" },
+               { name: "status", label: "Status", type: "string" }
+             ]
+           }
+         ]
+      end
+     },
+
+    fetch_file: {
+      title: "Fech File",
+      subtitle: "Fech File",
+      description: "",
+
+      input_fields: lambda do
+        [
+          {
+            name: "file_name",
+            label: "File Name",
+            optional: false,
+            sticky: true
+          }
+        ]
+      end,
+
+      execute: lambda do |connection, input, eis, eos, closure|       
+        query_object = {
+           "query" => {
+             "bool" => {
+               "must" => [],
+               "filter" => {}
+             }
+           }
+         }
+        
+        #  query_object["query"]["bool"]["must"] << { "match" => { "firstName" => input["firstName"] } } if input["firstName"]
+        
+        
+         post("Customers/Autopal.Search()")
+         .payload(query_object)
+         .params({
+           "$top" => input["$top"] || 25,  # Default to 25 if not provided
+           "$start" => input["$start"] || 0,  # Default to 0 if not provided
+           "$orderby" => input["$orderby"] || "firstName"
+         })
+      end,
+
+       output_fields: lambda do
+         [
+           {
+             name: "Customers",
+             type: "array",
+             of: "object",
+             properties: [
+               { name: "lastName", label: "Last Name", type: "string" },
+               { name: "hasEmployer", label: "Has Employer", type: "integer" },
+               { name: "gender", label: "Gender", type: "string" },
+               { name: "loansCount", label: "Loans Count", type: "integer" },
+               { name: "customFields", label: "Custom Fields", type: "object" },
+               { name: "dynamicProperties", label: "Dynamic Properties", type: "array", of: "object" },
+               { name: "companyName", label: "Company Name", type: "string" },
+               { name: "primaryPhoneDnd", label: "Primary Phone DND", type: "string" },
+               { name: "customId", label: "Custom ID", type: "string" },
+               { name: "ssn", label: "SSN", type: "string" },
+               { name: "customerType", label: "Customer Type", type: "string" },
+               { name: "paymentAccountsCount", label: "Payment Accounts Count", type: "integer" },
+               { name: "customerId", label: "Customer ID", type: "string" },
+               { name: "creditLimit", label: "Credit Limit", type: "string" },
+               { name: "employer", label: "Employer", type: "string" },
+               { name: "id", label: "ID", type: "string" },
+               { name: "email", label: "Email", type: "string" },
+               { name: "creditScore", label: "Credit Score", type: "integer" },
+               { name: "referencesCount", label: "References Count", type: "integer" },
+               { name: "contactName", label: "Contact Name", type: "string" },
+               { name: "created", label: "Created Date", type: "string" },
+               { name: "ofacCompliance", label: "OFAC Compliance", type: "string" },
+               { name: "birthDate", label: "Birth Date", type: "string" },
+               { name: "customerName", label: "Customer Name", type: "string" },
+               { name: "hasAvatar", label: "Has Avatar", type: "string" },
+               { name: "firstName", label: "First Name", type: "string" },
+               { name: "primaryPhone", label: "Primary Phone", type: "string" },
+               { name: "ofactTested", label: "OFAC Tested", type: "string" },
+               { name: "smsVerified", label: "SMS Verified", type: "integer" },
+               { name: "middleName", label: "Middle Name", type: "string" },
+               { name: "saleTransferPii", label: "Sale Transfer PII", type: "integer" },
+               { name: "accessUsername", label: "Access Username", type: "string" },
+               {
+                 name: "primaryAddress",
+                 label: "Primary Address",
+                 type: "object",
+                 properties: [
+                   { name: "zipcode", label: "Zip Code", type: "string" },
+                   { name: "country", label: "Country", type: "string" },
+                   { name: "isVerified", label: "Address Verified", type: "string" },
+                   { name: "city", label: "City", type: "string" },
+                   { name: "address1", label: "Address Line 1", type: "string" },
+                   { name: "state", label: "State", type: "string" }
+                 ]
+               },
+               { name: "ofactMatch", label: "OFAC Match", type: "string" },
+               { name: "age", label: "Age", type: "integer" },
+               { name: "status", label: "Status", type: "string" }
+             ]
+           }
+         ]
+      end
+     },     
+
+    uncompress_file: {
+      title: "Uncompress File",
+      subtitle: "Uncompress File",
+      description: "",
+
+      input_fields: lambda do
+        [
+          {
+            name: "file_name",
+            label: "File Name",
+            optional: false,
+            sticky: true
+          }
+        ]
+      end,
+
+      execute: lambda do |connection, input, eis, eos, closure|       
+        query_object = {
+           "query" => {
+             "bool" => {
+               "must" => [],
+               "filter" => {}
+             }
+           }
+         }
+        
+        #  query_object["query"]["bool"]["must"] << { "match" => { "firstName" => input["firstName"] } } if input["firstName"]
+        
+        
+         post("Customers/Autopal.Search()")
+         .payload(query_object)
+         .params({
+           "$top" => input["$top"] || 25,  # Default to 25 if not provided
+           "$start" => input["$start"] || 0,  # Default to 0 if not provided
+           "$orderby" => input["$orderby"] || "firstName"
+         })
+      end,
+
+       output_fields: lambda do
+         [
+           {
+             name: "Customers",
+             type: "array",
+             of: "object",
+             properties: [
+               { name: "lastName", label: "Last Name", type: "string" },
+               { name: "hasEmployer", label: "Has Employer", type: "integer" },
+               { name: "gender", label: "Gender", type: "string" },
+               { name: "loansCount", label: "Loans Count", type: "integer" },
+               { name: "customFields", label: "Custom Fields", type: "object" },
+               { name: "dynamicProperties", label: "Dynamic Properties", type: "array", of: "object" },
+               { name: "companyName", label: "Company Name", type: "string" },
+               { name: "primaryPhoneDnd", label: "Primary Phone DND", type: "string" },
+               { name: "customId", label: "Custom ID", type: "string" },
+               { name: "ssn", label: "SSN", type: "string" },
+               { name: "customerType", label: "Customer Type", type: "string" },
+               { name: "paymentAccountsCount", label: "Payment Accounts Count", type: "integer" },
+               { name: "customerId", label: "Customer ID", type: "string" },
+               { name: "creditLimit", label: "Credit Limit", type: "string" },
+               { name: "employer", label: "Employer", type: "string" },
+               { name: "id", label: "ID", type: "string" },
+               { name: "email", label: "Email", type: "string" },
+               { name: "creditScore", label: "Credit Score", type: "integer" },
+               { name: "referencesCount", label: "References Count", type: "integer" },
+               { name: "contactName", label: "Contact Name", type: "string" },
+               { name: "created", label: "Created Date", type: "string" },
+               { name: "ofacCompliance", label: "OFAC Compliance", type: "string" },
+               { name: "birthDate", label: "Birth Date", type: "string" },
+               { name: "customerName", label: "Customer Name", type: "string" },
+               { name: "hasAvatar", label: "Has Avatar", type: "string" },
+               { name: "firstName", label: "First Name", type: "string" },
+               { name: "primaryPhone", label: "Primary Phone", type: "string" },
+               { name: "ofactTested", label: "OFAC Tested", type: "string" },
+               { name: "smsVerified", label: "SMS Verified", type: "integer" },
+               { name: "middleName", label: "Middle Name", type: "string" },
+               { name: "saleTransferPii", label: "Sale Transfer PII", type: "integer" },
+               { name: "accessUsername", label: "Access Username", type: "string" },
+               {
+                 name: "primaryAddress",
+                 label: "Primary Address",
+                 type: "object",
+                 properties: [
+                   { name: "zipcode", label: "Zip Code", type: "string" },
+                   { name: "country", label: "Country", type: "string" },
+                   { name: "isVerified", label: "Address Verified", type: "string" },
+                   { name: "city", label: "City", type: "string" },
+                   { name: "address1", label: "Address Line 1", type: "string" },
+                   { name: "state", label: "State", type: "string" }
+                 ]
+               },
+               { name: "ofactMatch", label: "OFAC Match", type: "string" },
+               { name: "age", label: "Age", type: "integer" },
+               { name: "status", label: "Status", type: "string" }
+             ]
+           }
+         ]
+      end
+     },
+
+  },
+
+  triggers: {
+
+  },
+
+  methods: <%= File.read('./src/methods.rb') %>,
+  object_definitions: {
+
+  },
+
+  pick_lists: {
+
+  }
+}

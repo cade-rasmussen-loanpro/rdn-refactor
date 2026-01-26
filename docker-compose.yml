@@ -1,0 +1,35 @@
+services:
+  lms_credit_report:
+    build:
+      context: .
+      dockerfile: solutions/lms_credit_report/Dockerfile
+    working_dir: /app/solutions/lms_credit_report
+    volumes:
+      - .:/app
+      - ./lib:/app/lib
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+
+  ofac_loan_export:
+    build:
+      context: .
+      dockerfile: solutions/ofac_loan_export/Dockerfile
+    working_dir: /app/solutions/ofac_loan_export
+    volumes:
+      - .:/app
+      - ./lib:/app/lib
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+
+  # New solution
+  # other_solution:
+  #   build: .
+  #   working_dir: /app/solutions/other_solution
+  #   volumes:
+  #     - .:/app
+  #   stdin_open: true
+  #   tty: true
