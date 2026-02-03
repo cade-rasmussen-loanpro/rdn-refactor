@@ -7,12 +7,12 @@ RUN apt-get update && apt-get install -y \
     coreutils \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app/solutions/lms_credit_report
+WORKDIR /app
 
-COPY solutions/lms_credit_report/Gemfile* ./
+COPY Gemfile* ./
 
 RUN bundle install
 
-COPY solutions/lms_credit_report/ ./
+COPY . .
 
 CMD ["bundle", "exec", "irb"]
