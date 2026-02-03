@@ -9,10 +9,10 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app/solutions/lms_credit_report
 
-COPY /solutions/lms_credit_report/Gemfile* ./
+COPY solutions/lms_credit_report/Gemfile* ./
 
 RUN bundle install
 
-COPY . /app
+COPY solutions/lms_credit_report/ ./
 
 CMD ["bundle", "exec", "irb"]
