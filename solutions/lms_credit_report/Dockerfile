@@ -7,12 +7,18 @@ RUN apt-get update && apt-get install -y \
     coreutils \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app/solutions/lms_credit_report
+WORKDIR /app
 
-COPY /solutions/lms_credit_report/Gemfile* ./
-
+COPY Gemfile* ./
 RUN bundle install
 
-COPY . /app
+COPY . .
+
+
+RUN groupadd -g 10001 app && \
+    useradd  -u 10001 -g app -m -s /bin/bash app && \
+    chown -R app:app /app
+
+USER app
 
 CMD ["bundle", "exec", "irb"]
