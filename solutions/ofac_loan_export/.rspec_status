@@ -1,4 +1,0 @@
-example_id                      | status  | run_time        |
-------------------------------- | ------- | --------------- |
-./spec/connector_spec.rb[1:1]   | passed  | 0.00414 seconds |
-./spec/connector_spec.rb[1:2:1] | pending | 0.00001 seconds |

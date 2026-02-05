@@ -9,3 +9,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'vcr'
 gem 'webmock'
 gem 'workato-connector-sdk'
+
+group :development, :test do
+  gem 'rspec'
+  gem 'pry'
+end
