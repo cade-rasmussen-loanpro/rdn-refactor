@@ -1,3 +1,5 @@
+
+
 {
   title: "OFAC Loan Export - SDK",
 
@@ -11,16 +13,16 @@
       },
       {
         name: "aws_region",
+        label: "AWS Region",
         optional: false,
         hint: "AWS service region. If your account URL is <b>https://eu-west-1.console.s3.amazon.com</b>, use <b>eu-west-1</b> as the region."
       }
     ],
-    authorization: { type: "custom_auth" }
-  },
 
-  test: lambda do |connection|
-    call(:list_buckets, connection)
-  end,
+    authorization: { type: "custom_auth" }
+},
+
+  test: lambda { |connection| call(:list_buckets, connection) },
 
   actions: {
     ofac_loan_export: {
@@ -212,7 +214,9 @@
         ]
       end
     }
-  },
+},
+
+  pick_lists: {},
 
   methods: {
     build_assume_role_arn: lambda do |connection|
@@ -305,5 +309,5 @@
         "response_body" => (resp.response_body rescue resp)
       }
     end
-  }
+}, 
 }

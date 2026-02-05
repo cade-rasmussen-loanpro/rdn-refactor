@@ -1,9 +1,9 @@
 services:
-  lms_credit_report:
+  rdn_connector:
     build:
       context: .
-      dockerfile: solutions/lms_credit_report/Dockerfile
-    working_dir: /app/solutions/lms_credit_report
+      dockerfile: connectors/rdn/Dockerfile
+    working_dir: /app/connectors/rdn
     volumes:
       - .:/app
       - ./lib:/app/lib
@@ -15,8 +15,8 @@ services:
   ofac_loan_export:
     build:
       context: .
-      dockerfile: solutions/ofac_loan_export/Dockerfile
-    working_dir: /app/solutions/ofac_loan_export
+      dockerfile: connectors/ofac_loan_export/Dockerfile
+    working_dir: /app/connectors/ofac_loan_export
     volumes:
       - .:/app
       - ./lib:/app/lib
