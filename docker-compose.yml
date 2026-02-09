@@ -6,11 +6,12 @@ services:
     working_dir: /app/connectors/rdn
     volumes:
       - .:/app
-      - ./lib:/app/lib
+      - rdn_bundle:/home/app/bundle
     env_file:
       - .env
     stdin_open: true
     tty: true
+
 
   ofac_loan_export:
     build:
@@ -25,11 +26,14 @@ services:
     stdin_open: true
     tty: true
 
-  # New solution
-  # other_solution:
-  #   build: .
-  #   working_dir: /app/solutions/other_solution
-  #   volumes:
-  #     - .:/app
-  #   stdin_open: true
-  #   tty: true
+# New solution
+# other_solution:
+#   build: .
+#   working_dir: /app/solutions/other_solution
+#   volumes:
+#     - .:/app
+#   stdin_open: true
+#   tty: true
+
+volumes:
+  rdn_bundle:

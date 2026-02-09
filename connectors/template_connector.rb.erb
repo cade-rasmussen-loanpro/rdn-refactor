@@ -1,4 +1,6 @@
-<%= libraries || "" %>
+<% libraries.each_with_index do |content, index| %>
+    <%= content %>
+<% end %>
 
 {
   title: "<%= title %>",

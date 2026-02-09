@@ -18,6 +18,7 @@ ruby build.rb
 # Run tests
 ```bash
 rspec rdn_library_spec.rb
+bundle exec rspec
 ```
 
 # Deploy
