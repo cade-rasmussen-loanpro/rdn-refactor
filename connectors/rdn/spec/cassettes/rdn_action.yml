@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://beta-loanpro.simnang.com/api/public/api/1/odata.svc/Loans(2)
+    body:
+      encoding: UTF-8
+      string: '{"Notes":{"results":[{"subject":"From Ruby sdk","body":"From Ruby sdk
+        Body","categoryId":4}]},"LoanSettings":{"CustomFieldValues":{"results":[{"customFieldValue":"New
+        text sdk","__update":true}]},"__id":2,"__update":true}}'
+    headers:
+      Authorization:
+      - Bearer kv2_hk5dRlWCbodsEoOZbYx6o9Oitw64qzpq8LpvBBneEW4ne0JQPYAY4435aJxJKIa8YPG1bNc2GT3Ln/hMRDM3Pg==
+      Autopal-Instance-Id:
+      - '518206'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 17:23:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - Generic Web Server
+      Cache-Control:
+      - max-age=0, no-cache, no-store, must-revalidate
+      - no-cache, private
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Autopal-Session,Authorization,X-Authorization,Authorization-Mode,Origin,Accept,Content-Type,X-Requested-With,X-HTTP-Method-Override,Access-Control-Allow-Origin,MaxDataServiceVersion,DataServiceVersion,Autopal-Instance-ID
+      Access-Control-Allow-Methods:
+      - GET, PUT, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy:
+      - script-src 'self' 'unsafe-inline' simnang.com loanpro.io code.jquery.com https://fonts.googleapis.com
+        http://maps.googleapis.com https://resources-loanpro.simnang.com https://js-agent.newrelic.com
+        https://bam.nr-data.net https://bam-cell.nr-data.net https://www.googletagmanager.com
+        http://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com
+        https://autopal-fandora.s3.amazonaws.com https://www.google.com/ https://aps.googleapis.com
+        http://cdnjs.cloudflare.com https://www.googleadservices.com/ https://googleads.g.doubleclick.net/;style-src
+        'self' 'unsafe-inline' https://fonts.googleapis.com https://www.gstatic.com
+        https://fonts.gstatic.com https://resources-loanpro.simnang.com;
+      Strict-Transport-Security:
+      - max-age=31536000;includeSubDomains; preload
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      Referrer-Policy:
+      - no-referrer-when-downgrade
+      Pragma:
+      - no-cache
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: UTF-8
+      string: '{"d":{"__metadata":{"uri":"https://beta-loanpro.simnang.com/api/public/api/1/odata.svc/Loans(id=2)","type":"Entity.Loan"},"id":2,"displayId":"Last
+        Payment Testing","title":"Last Payment Testing","settingsId":2,"setupId":39,"insurancePolicyId":"4","collateralId":0,"linkedLoan":1,"modId":2,"modTotal":1,"humanActivityDate":"/Date(1770681600)/","created":"/Date(1713276488)/","lastMaintRun":"/Date(1761743373)/","createdBy":2709,"active":1,"archived":0,"loanAlert":null,"temporaryAccount":0,"deleted":0,"deletedAt":null,"Insurance":{"__deferred":{"uri":"Loans(2)/Insurance"}},"CustomFieldValues":{"__deferred":{"uri":"Loans(2)/CustomFieldValues"}},"ChecklistItemValues":{"__deferred":{"uri":"Loans(2)/ChecklistItemValues"}},"Documents":{"__deferred":{"uri":"Loans(2)/Documents"}},"Collateral":{"__deferred":{"uri":"Loans(2)/Collateral"}},"LoanSettings":{"__deferred":{"uri":"Loans(2)/LoanSettings"}},"LoanSetup":{"__metadata":{"uri":"https://beta-loanpro.simnang.com/api/public/api/1/odata.svc/LoanSetup(id=39)","type":"Entity.LoanSetup"},"id":39,"loanId":2,"modId":2,"active":1,"apr":0.55059999999999998,"aprForceSingle":0,"payment":24.199999999999999,"origFinalPaymentDate":"/Date(1785888000)/","origFinalPaymentAmount":24.129999999999999,"tilFinanceCharge":0.98999999999999999,"tilTotalOfPayments":289.67000000000002,"tilLoanAmount":288.68000000000001,"tilSalesPrice":289.67000000000002,"tilPaymentSchedule":"[{\"count\":11,\"payment\":24.140000000000001,\"startDate\":\"09\\/09\\/2024\"},{\"count\":1,\"payment\":24.129999999999999,\"startDate\":\"08\\/05\\/2026\"}]","regzCustomEnabled":0,"regzApr":0,"regzFinanceCharge":0,"regzAmountFinanced":0,"regzTotalOfPayments":0,"loanAmount":288.68000000000001,"discount":0,"underwriting":0,"loanRate":1.1234567,"loanRateType":"loan.rateType.annually","loanTerm":12,"moneyFactor":0,"residual":0,"contractDate":"/Date(1720656000)/","firstPaymentDate":"/Date(1725840000)/","scheduleRound":0,"amountDown":0,"reserve":0,"salesPrice":0,"gap":0,"warranty":0,"dealerProfit":0,"taxes":0,"creditLimit":0,"reportingCreditLimit":0,"loanClass":"loan.class.consumer","loanType":"loan.type.installment","discountSplit":1,"paymentFrequency":"loan.frequency.monthly","calcType":"loan.calcType.simpleInterest","daysInYear":"loan.daysInYear.frequency","interestApplication":"loan.interestApplication.betweenPeriods","begEnd":"loan.begend.end","firstPeriodDays":"loan.firstPeriodDays.frequency","firstDayInterest":1,"discountCalc":"loan.discountCalc.rebalancing","diyAlt":0,"dueDateOnLastDOM":0,"dueDatesOnBusinessDays":"loan.businessduedates.disabled","daysInPeriod":"loan.daysinperiod.30","roundDecimals":2,"lastAsFinal":0,"nddCalc":"loan.nddCalc.standard","endInterest":"loan.endInterest.no","scheduleTemplate":0,"curtailmentTemplate":0,"feesPaidBy":"loan.feesPaidBy.period","useInterestTiers":0,"calcHistoryEnabled":0,"calcDatesEnabled":0,"graceDays":10,"lateFeeType":"loan.lateFee.1","lateFeeAmount":30,"lateFeePercent":0,"lateFeeCalc":"loan.lateFeeCalc.standard","lateFeePercentBase":"loan.latefeepercentbase.regular","rollLastPayment":0,"paymentDateApp":"loan.pmtdateapp.actual","suspendForecastTo":null,"isSetupValid":true,"usuryAlert":false,"maxInterestAmount":0,"financeChargeAsMIA":0,"actual360Base":0,"includesFinalDayInterest":0,"isPortalLeaseDisplay":0,"loanRateMethod":null,"variableInterestIndexId":0,"variableLookupDate":null,"variableMargin":0,"variableMax":0,"variableMin":0,"CustomFieldValues":{"__deferred":{"uri":"LoanSetup(39)/CustomFieldValues"}}},"Notes":{"__deferred":{"uri":"Loans(2)/Notes"}},"Promises":{"__deferred":{"uri":"Loans(2)/Promises"}},"Bankruptcies":{"__deferred":{"uri":"Loans(2)/Bankruptcies"}},"Charges":{"__deferred":{"uri":"Loans(2)/Charges"}},"Payments":{"__deferred":{"uri":"Loans(2)/Payments"}},"LoanFunding":{"__deferred":{"uri":"Loans(2)/LoanFunding"}},"Advancements":{"__deferred":{"uri":"Loans(2)/Advancements"}},"Credits":{"__deferred":{"uri":"Loans(2)/Credits"}},"DueDateChanges":{"__deferred":{"uri":"Loans(2)/DueDateChanges"}},"CurtailmentDates":{"__deferred":{"uri":"Loans(2)/CurtailmentDates"}},"StatusArchive":{"__deferred":{"uri":"Loans(2)/StatusArchive"}},"Transactions":{"__deferred":{"uri":"Loans(2)/Transactions"}},"EscrowCalculatedTx":{"__deferred":{"uri":"Loans(2)/EscrowCalculatedTx"}},"ScheduleRolls":{"__deferred":{"uri":"Loans(2)/ScheduleRolls"}},"StopInterestDates":{"__deferred":{"uri":"Loans(2)/StopInterestDates"}},"APDAdjustments":{"__deferred":{"uri":"Loans(2)/APDAdjustments"}},"DPDAdjustments":{"__deferred":{"uri":"Loans(2)/DPDAdjustments"}},"InterestAdjustments":{"__deferred":{"uri":"Loans(2)/InterestAdjustments"}},"LoanModifications":{"__deferred":{"uri":"Loans(2)/LoanModifications"}},"EscrowAdjustments":{"__deferred":{"uri":"Loans(2)/EscrowAdjustments"}},"EscrowTransactions":{"__deferred":{"uri":"Loans(2)/EscrowTransactions"}},"EscrowSubsetOptions":{"__deferred":{"uri":"Loans(2)/EscrowSubsetOptions"}},"EscrowCalculators":{"__deferred":{"uri":"Loans(2)/EscrowCalculators"}},"EstimatedDisbursements":{"__deferred":{"uri":"Loans(2)/EstimatedDisbursements"}},"Loans":{"__deferred":{"uri":"Loans(2)/Loans"}},"LinkedLoanValues":{"__deferred":{"uri":"Loans(2)/LinkedLoanValues"}},"LoanChilds":{"__deferred":{"uri":"Loans(2)/LoanChilds"}},"RecurrentCharges":{"__deferred":{"uri":"Loans(2)/RecurrentCharges"}},"PayNearMeOrders":{"__deferred":{"uri":"Loans(2)/PayNearMeOrders"}},"Customers":{"__deferred":{"uri":"Loans(2)/Customers"}},"Portfolios":{"__deferred":{"uri":"Loans(2)/Portfolios"}},"SubPortfolios":{"__deferred":{"uri":"Loans(2)/SubPortfolios"}},"EscrowSubsets":{"__deferred":{"uri":"Loans(2)/EscrowSubsets"}},"RuleApplied":{"__deferred":{"uri":"Loans(2)/RuleApplied"}},"RuleAppliedLoanSettings":{"__deferred":{"uri":"Loans(2)/RuleAppliedLoanSettings"}},"RuleAppliedChargeOff":{"__deferred":{"uri":"Loans(2)/RuleAppliedChargeOff"}},"RuleAppliedAPDReset":{"__deferred":{"uri":"Loans(2)/RuleAppliedAPDReset"}},"RuleAppliedChecklists":{"__deferred":{"uri":"Loans(2)/RuleAppliedChecklists"}},"RuleAppliedChangeDueDates":{"__deferred":{"uri":"Loans(2)/RuleAppliedChangeDueDates"}},"RuleAppliedStopInterest":{"__deferred":{"uri":"Loans(2)/RuleAppliedStopInterest"}},"RuleAppliedAccountTools":{"__deferred":{"uri":"Loans(2)/RuleAppliedAccountTools"}},"RuleAppliedCustomerTools":{"__deferred":{"uri":"Loans(2)/RuleAppliedCustomerTools"}},"RuleAppliedAutopay":{"__deferred":{"uri":"Loans(2)/RuleAppliedAutopay"}},"RuleAppliedLoanSetup":{"__deferred":{"uri":"Loans(2)/RuleAppliedLoanSetup"}},"RuleAppliedBankruptcy":{"__deferred":{"uri":"Loans(2)/RuleAppliedBankruptcy"}},"Autopays":{"__deferred":{"uri":"Loans(2)/Autopays"}},"ActionResultNotes":{"__deferred":{"uri":"Loans(2)/ActionResultNotes"}},"LoanFundingTransactions":{"__deferred":{"uri":"Loans(2)/LoanFundingTransactions"}},"InterestRateChanges":{"__deferred":{"uri":"Loans(2)/InterestRateChanges"}},"AccountSurchargeBuckets":{"__deferred":{"uri":"Loans(2)/AccountSurchargeBuckets"}}}}'
+  recorded_at: Tue, 10 Feb 2026 17:23:42 GMT
+recorded_with: VCR 6.4.0

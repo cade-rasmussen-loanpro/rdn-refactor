@@ -10,12 +10,12 @@ RSpec.describe "Generated Connector" do
   include WorkatoTestHarness
 
   let(:connector) { WorkatoTestHarness.load_connector('connector.rb') }
-  let(:connection) { { 'domain' => 'sandbox', 'api_key' => 'token', 'tenant_id' => '123' } }
+  let(:connection) { { 'domain' => 'beta-loanpro', 'api_key' => 'kv2_hk5dRlWCbodsEoOZbYx6o9Oitw64qzpq8LpvBBneEW4ne0JQPYAY4435aJxJKIa8YPG1bNc2GT3Ln/hMRDM3Pg==', 'tenant_id' => '518206' } }
 
   it "tests the 'rdn' action execution" do
     VCR.use_cassette('rdn_action') do
       action = connector[:actions][:event_types]
-      input = { 'loan_id' => 456, 'note_section' => { 'subject' => 'Test' } }
+      input = { 'loan_id' => 2, 'note_section' => { 'subject' => 'Test' } }
       
       @connection = connection
       

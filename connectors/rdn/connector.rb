@@ -1,14 +1,16 @@
 module LoanProApiClient
-  def self.request(context, method:, endpoint:, payload: nil)
+  def self.request(context, method:, endpoint:, payload: nil, params: nil)
+    url = params ? "#{endpoint}?#{URI.encode_www_form(params)}" : endpoint
+
     case method.to_s.downcase
-    when "get" then context.send(:get, endpoint)
-    when "post" then context.send(:post, endpoint, payload)
-    when "put" then context.send(:put, endpoint, payload)
+    when "get" then context.send(:get, url)
+    when "post" then context.send(:post, url, payload)
+    when "put" then context.send(:put, url, payload)
     else
       raise "Unsupported method: #{method}"
     end
   rescue => e
-    context.send(:error, "#{method.upcase} #{endpoint} failed: #{e.message}")
+    context.send(:error, "#{method.upcase} #{url} failed: #{e.message}")
   end
 end
 
@@ -38,8 +40,7 @@ module SimpleFields
       type: "object",
       properties: properties,
       sticky: true,
-      optional: false,
-      render_input: "subform"
+      optional: false
     }.merge(options)
   end
 
@@ -137,7 +138,7 @@ module RdnFields
           name: "custom_field_id_rdn_case_closed_reason",
           label: "Custom Field Id RDN Case Closed Reason"
         ),
-        SimpleFields.string_field(
+        SimpleFields.string(
           name: "close_reason",
           label: "Close Reason"
         )
@@ -172,37 +173,26 @@ module RdnActions
       end,
 
       execute: lambda do |connection, input|
-        payload = {
-          Notes: {
-            results: [
-              {
-                subject: "From Ruby sdk",
-                body: "From Ruby sdk Body",
-                categoryId: 4
-              }
-            ]
-          },
-          LoanSettings: {
-            CustomFieldValues: {
-              results: [
-                {
-                  # "customFieldId" => 3,
-                  "customFieldValue" => "New text sdk",
-                  :__update => true
-                }
-              ]
-            },
-            __id: 2,
-            __update: true
-          }
-        }
+        # LoanProApiClient.request(
+        #  self,
+        #  method: :put,
+        #  endpoint: "odata.svc/Loans(#{input['loan_id']})",
+        #  payload: payload
+        # )
+
+        params = {"$select": "id,settingsId"}
 
         LoanProApiClient.request(
           self,
-          method: :put,
-          endpoint: "odata.svc/Loans(#{input["loan_id"]})",
-          payload: payload
+          method: :get,
+          endpoint: "odata.svc/Loans(#{input["loan_id"]})?$select=id,settingsId",
+          payload: params
         )
+
+        # settings_id = lp_client.fetch_loan(
+        #    loan_id,
+        #    params={"$select": "id,settingsId"},
+        # )["settingsId"]
       end,
 
       output_fields: lambda do |object_definitions, connection, config_fields|

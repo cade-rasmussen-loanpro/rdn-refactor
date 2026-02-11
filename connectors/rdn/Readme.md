@@ -17,11 +17,11 @@ ruby build.rb
 
 # Run tests
 ```bash
-rspec rdn_library_spec.rb
 bundle exec rspec
+bundle exec rspec rdn_library_spec.rb
 ```
 
 # Deploy
 ```bash
-workato push
+bundle exec workato push
 ```

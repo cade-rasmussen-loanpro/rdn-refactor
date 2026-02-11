@@ -1,39 +1,3 @@
-module SimpleFields
-  def self.string(name:, label:, **options)
-    default_options("string")
-      .merge(options)
-      .merge(name: name, label: label)
-  end
-
-  def self.integer(name:, label:, **options)
-    default_options("integer")
-      .merge(options)
-      .merge(name: name, label: label, control_type: "integer")
-  end
-
-  def self.text_area(name:, label:, **options)
-    default_options("string")
-      .merge(options)
-      .merge(name: name, label: label, control_type: "text_area")
-  end  
-
-  def self.object(name:, label:, properties:, **options)
-    {
-      name: name,
-      label: label,
-      type: "object",
-      properties: properties,
-      sticky: true,
-      optional: false,
-      render_input: "subform"
-    }.merge(options)
-  end
-
-  def self.default_options(type)
-    { type: type, control_type: "text", sticky: true, optional: false }
-  end
-end
-
 module RdnFields
   def self.common_fields
     [
@@ -123,7 +87,7 @@ module RdnFields
           name: "custom_field_id_rdn_case_closed_reason", 
           label: "Custom Field Id RDN Case Closed Reason"
         ),
-        SimpleFields.string_field(
+        SimpleFields.string(
           name: "close_reason", 
           label: "Close Reason"
         )        
@@ -183,14 +147,29 @@ module RdnActions
           },
         }
 
+        #LoanProApiClient.request(
+        #  self,
+        #  method: :put, 
+        #  endpoint: "odata.svc/Loans(#{input['loan_id']})", 
+        #  payload: payload
+        #)
 
+
+        params = {"$select": "id,settingsId"}
 
         LoanProApiClient.request(
           self,
-          method: :put, 
-          endpoint: "odata.svc/Loans(#{input['loan_id']})", 
-          payload: payload
+          method: :get, 
+          endpoint: "odata.svc/Loans(#{input['loan_id']})?$select=id,settingsId", 
+          payload: params
         )
+
+
+        #settings_id = lp_client.fetch_loan(
+        #    loan_id,
+        #    params={"$select": "id,settingsId"},
+        #)["settingsId"]
+
       end,
 
       output_fields: lambda do |object_definitions, connection, config_fields|
