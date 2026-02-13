@@ -1,22 +1,20 @@
-
-    module LoanProApiClient
+module LoanProApiClient
   def self.request(context, method:, endpoint:, payload: nil, params: nil)
     url = params ? "#{endpoint}?#{URI.encode_www_form(params)}" : endpoint
 
-    response = case method.to_s.downcase
-               when 'get'    then context.send(:get, url)
-               when 'post'   then context.send(:post, url, payload)
-               when 'put'    then context.send(:put, url, payload)
-               else
-                 raise "Unsupported method: #{method}"
-               end
-    response
+    case method.to_s.downcase
+    when "get" then context.send(:get, url)
+    when "post" then context.send(:post, url, payload)
+    when "put" then context.send(:put, url, payload)
+    else
+      raise "Unsupported method: #{method}"
+    end
   rescue => e
     context.send(:error, "#{method.upcase} #{url} failed: #{e.message}")
   end
 end
 
-    module SimpleFields
+module SimpleFields
   def self.string(name:, label:, **options)
     default_options("string")
       .merge(options)
@@ -33,7 +31,7 @@ end
     default_options("string")
       .merge(options)
       .merge(name: name, label: label, control_type: "text_area")
-  end  
+  end
 
   def self.object(name:, label:, properties:, **options)
     {
@@ -47,116 +45,116 @@ end
   end
 
   def self.default_options(type)
-    { type: type, control_type: "text", sticky: true, optional: false }
+    {type: type, control_type: "text", sticky: true, optional: false}
   end
 end
 
-
-    # frozen_string_literal: true
+# frozen_string_literal: true
 
 module RdnFields
   def self.common_fields
     [
-      SimpleFields.integer(name: 'loan_id', label: 'Loan ID'),
-      SimpleFields.string(name: 'rdn_case_number', label: 'RDN Case Number'),
-      SimpleFields.integer(name: 'rdn_case_number_custom_field_id', label: 'RDN Case Number Custom Field ID'),
-      SimpleFields.integer(name: 'previous_rdn_case_number_custom_field_id',
-                           label: 'Previous RDN Case Number Custom Field ID'),
-      SimpleFields.integer(name: 'rdn_last_updated_custom_field_id', label: 'RDN Last Updated Custom Field ID'),
-      SimpleFields.string(name: 'rdn_last_updated_value', label: 'RDN Last Updated Value'),
+      SimpleFields.integer(name: "loan_id", label: "Loan ID"),
+      SimpleFields.string(name: "rdn_case_number", label: "RDN Case Number"),
+      SimpleFields.integer(name: "rdn_case_number_custom_field_id", label: "RDN Case Number Custom Field ID"),
+      SimpleFields.integer(name: "previous_rdn_case_number_custom_field_id",
+        label: "Previous RDN Case Number Custom Field ID"),
+      SimpleFields.integer(name: "rdn_last_updated_custom_field_id", label: "RDN Last Updated Custom Field ID"),
+      SimpleFields.string(name: "rdn_last_updated_value", label: "RDN Last Updated Value"),
       SimpleFields.object(
-        name: 'note_section',
-        label: 'Note Parameters',
+        name: "note_section",
+        label: "Note Parameters",
         properties: [
-          SimpleFields.integer(name: 'category_id', label: 'Category Id'),
-          SimpleFields.string(name: 'subject', label: 'Subject'),
-          SimpleFields.text_area(name: 'body', label: 'Body'),
-          SimpleFields.string(name: 'failure_subject', label: 'Failure Subject')
+          SimpleFields.integer(name: "category_id", label: "Category Id"),
+          SimpleFields.string(name: "subject", label: "Subject"),
+          SimpleFields.text_area(name: "body", label: "Body"),
+          SimpleFields.string(name: "failure_subject", label: "Failure Subject")
         ]
       )
     ]
   end
+  # In RdnFields (e.g. near the top of the module, after common_fields or event_type_fields)
 
   def self.event_type_fields(event_type)
     fields = case event_type
-             when '101'
-               [
-                 SimpleFields.integer(
-                   name: 'custom_field_id_repossesion_type',
-                   label: 'Custom Field Id Repossesion Type'
-                 )
-               ]
-             when '300'
-               [
-                 SimpleFields.integer(
-                   name: 'custom_field_id_repossesion_address',
-                   label: 'Custom Field Id Repossesion Address'
-                 ),
-                 SimpleFields.integer(
-                   name: 'custom_field_id_repossesion_company',
-                   label: 'Custom Field Id Repossesion Company'
-                 )
-               ]
-             when '301'
-               [
-                 SimpleFields.integer(
-                   name: 'loan_status_id',
-                   label: 'Loan Status Id'
-                 ),
-                 SimpleFields.integer(
-                   name: 'loan_sub_status_id',
-                   label: 'Loan Sub Status Id'
-                 ),
-                 SimpleFields.integer(
-                   name: 'portfolio_ids',
-                   label: 'Portfolio IDs'
-                 )
-               ]
-             when '600'
-               [
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_vendor_assigned_name',
-                   label: 'Custom Field Id RDN Case Vendor Assigned Name'
-                 ),
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_vendor_assigned_phone',
-                   label: 'Custom Field Id RDN Case Vendor Assigned Phone'
-                 ),
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_order_date',
-                   label: 'Custom Field Id RDN Case Order Date'
-                 )
-               ]
-             when '602'
-               [
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_closed_reason',
-                   label: 'Custom Field Id RDN Case Closed Reason'
-                 ),
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_closed_date',
-                   label: 'Custom Field Id RDN Case Closed Date'
-                 )
-               ]
-             when '603'
-               [
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_hold_date',
-                   label: 'Custom Field Id RDN Case Hold Date'
-                 )
-               ]
-             when '604'
-               [
-                 SimpleFields.integer(
-                   name: 'custom_field_id_rdn_case_closed_reason',
-                   label: 'Custom Field Id RDN Case Closed Reason'
-                 ),
-                 SimpleFields.string(
-                   name: 'close_reason',
-                   label: 'Close Reason'
-                 )
-               ]
-             end
+    when "101"
+      [
+        SimpleFields.integer(
+          name: "custom_field_id_repossesion_type",
+          label: "Custom Field Id Repossesion Type"
+        )
+      ]
+    when "300"
+      [
+        SimpleFields.integer(
+          name: "custom_field_id_repossesion_address",
+          label: "Custom Field Id Repossesion Address"
+        ),
+        SimpleFields.integer(
+          name: "custom_field_id_repossesion_company",
+          label: "Custom Field Id Repossesion Company"
+        )
+      ]
+    when "301"
+      [
+        SimpleFields.integer(
+          name: "loan_status_id",
+          label: "Loan Status Id"
+        ),
+        SimpleFields.integer(
+          name: "loan_sub_status_id",
+          label: "Loan Sub Status Id"
+        ),
+        SimpleFields.integer(
+          name: "portfolio_ids",
+          label: "Portfolio IDs"
+        )
+      ]
+    when "600"
+      [
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_vendor_assigned_name",
+          label: "Custom Field Id RDN Case Vendor Assigned Name"
+        ),
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_vendor_assigned_phone",
+          label: "Custom Field Id RDN Case Vendor Assigned Phone"
+        ),
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_order_date",
+          label: "Custom Field Id RDN Case Order Date"
+        )
+      ]
+    when "602"
+      [
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_closed_reason",
+          label: "Custom Field Id RDN Case Closed Reason"
+        ),
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_closed_date",
+          label: "Custom Field Id RDN Case Closed Date"
+        )
+      ]
+    when "603"
+      [
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_hold_date",
+          label: "Custom Field Id RDN Case Hold Date"
+        )
+      ]
+    when "604"
+      [
+        SimpleFields.integer(
+          name: "custom_field_id_rdn_case_closed_reason",
+          label: "Custom Field Id RDN Case Closed Reason"
+        ),
+        SimpleFields.string(
+          name: "close_reason",
+          label: "Close Reason"
+        )
+      ]
+    end
 
     fields || []
   end
@@ -165,22 +163,22 @@ end
 module RdnActions
   def self.event_types
     {
-      title: 'RDN Event Type',
-      subtitle: 'RDN implementation',
+      title: "RDN Event Type",
+      subtitle: "RDN implementation",
 
       config_fields: [
         {
-          name: 'event_type',
-          label: 'Event Type',
-          control_type: 'select',
-          pick_list: 'rdn_event_types',
+          name: "event_type",
+          label: "Event Type",
+          control_type: "select",
+          pick_list: "rdn_event_types",
           optional: false
         }
       ],
 
       input_fields: lambda do |_object_definitions, _connection, config_fields|
         note_fields = RdnFields.common_fields
-        event_type_fields = RdnFields.event_type_fields(config_fields['event_type'])
+        event_type_fields = RdnFields.event_type_fields(config_fields["event_type"])
 
         event_type_fields + note_fields
       end,
@@ -193,12 +191,12 @@ module RdnActions
         #  payload: payload
         # )
 
-        params = { "$select": 'id,settingsId' }
+        params = {"$select": "id,settingsId"}
 
         LoanProApiClient.request(
           self,
           method: :get,
-          endpoint: "odata.svc/Loans(#{input['loan_id']})?$select=id,settingsId",
+          endpoint: "odata.svc/Loans(#{input["loan_id"]})?$select=id,settingsId",
           payload: params
         )
 
@@ -210,11 +208,11 @@ module RdnActions
 
       output_fields: lambda do |_object_definitions, _connection, _config_fields|
         [
-          { name: 'categoryId', label: 'Category Id', type: 'integer', optional: false, sticky: true,
-            control_type: 'integer' },
-          { name: 'subject', label: 'Subject', type: 'string', optional: false, sticky: true },
-          { name: 'body', label: 'Body', type: 'string', optional: false, sticky: true, control_type: 'text_area' },
-          { name: 'payload', label: 'Payload JSON', type: 'string', optional: true, control_type: 'text_area' }
+          {name: "categoryId", label: "Category Id", type: "integer", optional: false, sticky: true,
+           control_type: "integer"},
+          {name: "subject", label: "Subject", type: "string", optional: false, sticky: true},
+          {name: "body", label: "Body", type: "string", optional: false, sticky: true, control_type: "text_area"},
+          {name: "payload", label: "Payload JSON", type: "string", optional: true, control_type: "text_area"}
         ]
       end
     }
@@ -222,67 +220,77 @@ module RdnActions
 
   def self.base_action
     {
-      title: 'Get Loan Information',
-      subtitle: 'Using RDN Case ID Get Loan Information',
+      title: "Get Loan Information",
+      subtitle: "Using RDN Case ID Get Loan Information",
 
       config_fields: [
         {
-          name: 'rdn_case_number',
-          label: 'RDN Case ID',
-          control_type: 'string',
+          name: "rdn_case_number",
+          label: "RDN Case ID",
+          control_type: "string",
           optional: false,
           details: {
-            real_name: 'rdn_case_number'
+            real_name: "rdn_case_number"
           }
         },
         {
-          name: 'rdn_case_number_custom_field_id',
-          label: 'Case ID - Custom Field ID',
-          control_type: 'integer',
+          name: "rdn_case_number_custom_field_id",
+          label: "Case ID - Custom Field ID",
+          control_type: "integer",
           optional: false,
           details: {
-            real_name: 'rdn_case_number_cf_id'
+            real_name: "rdn_case_number_cf_id"
           }
         },
         {
-          name: 'previous_rdn_case_number_custom_field_id',
-          label: 'Previous Case ID - Custom Field ID',
-          control_type: 'integer',
+          name: "previous_rdn_case_number_custom_field_id",
+          label: "Previous Case ID - Custom Field ID",
+          control_type: "integer",
           optional: false,
           details: {
-            real_name: 'rdn_previous_case_number_cf_id'
+            real_name: "rdn_previous_case_number_cf_id"
           }
         },
         {
-          name: 'rdn_last_updated_custom_field_id',
-          label: 'Last Updated - Custom Field ID',
-          control_type: 'integer',
+          name: "rdn_last_updated_custom_field_id",
+          label: "Last Updated - Custom Field ID",
+          control_type: "integer",
           optional: false,
           details: {
-            real_name: 'rdn_last_updated_cf_id'
+            real_name: "rdn_last_updated_cf_id"
           }
         },
         {
-          name: 'rdn_last_updated_value',
-          label: 'Last Updated Value',
-          control_type: 'string',
+          name: "rdn_last_updated_value",
+          label: "Last Updated Value",
+          control_type: "string",
           optional: false,
           details: {
-            real_name: 'rdn_last_updated_cf_id'
+            real_name: "rdn_last_updated_cf_id"
           }
         }
       ],
 
-      output_fields: lambda do |_object_definitions, _connection, _config_fields|
+      execute: lambda do |_connection, input|
+        filter_stmt = f "customFieldId eq {input['rdn_case_number_custom_field_id']} and customFieldValue eq '{input['rdn_case_number']}' and entityType eq 'Entity.LoanSettings'"
+        {"$filter": filter_stmt}
+        LoanProApiClient.request(
+          self,
+          method: :get,
+          endpoint: "odata.svc/Loans(#{input["loan_id"]})?$select=id,settingsId"
+        )
+      end,
+
+      output_fields: lambda do |_object_definitions, _connection, _input_fields|
         [
-          { name: 'loan_id', label: 'Loan Id', type: 'integer', optional: false, sticky: true,
-            control_type: 'integer' },
-          { name: 'loan_settings_id', label: 'Loan Settings Id', type: 'string', optional: false, sticky: true,
-            control_type: 'integer' },
-          { name: 'previous_rdn_case_number', label: 'Previous RDN Case Number', type: 'string', optional: false,
-            sticky: true, control_type: 'string' },
-          { name: 'rdn_last_updated', label: 'Last Updated', type: 'string', optional: false, sticky: true,
-            control_type: 'string' }
+          {name: "loan_id", label: "Loan Id", type: "integer", optional: false, sticky: true,
+           control_type: "integer"},
+          {name: "loan_settings_id", label: "Loan Settings Id", type: "string", optional: false, sticky: true,
+           control_type: "integer"},
+          {name: "previous_rdn_case_number", label: "Previous RDN Case Number", type: "string", optional: false,
+           sticky: true, control_type: "string"},
+          {name: "rdn_last_updated", label: "Last Updated", type: "string", optional: false, sticky: true,
+           control_type: "string"}
         ]
       end
 
@@ -290,62 +298,89 @@ module RdnActions
   end
 end
 
-# module RdnTriggers
-#   def self.base_trigger
-# end
+module RdnTriggers
+  def self.updated_case
+    {
+      title: "New Event / Update",
 
+      subtitle: "Triggers when a new event is found in RDN.",
 
+      description: lambda do |input, picklist_label|
+        "New update or event on a <span class='provider'>case</span> " \
+        "in <span class='provider'>RDN</span>"
+      end,
+
+      help: "Creates a job when a new event or update is made on a case in " \
+      "RDN. Each new event creates a separate job.",
+
+      input_fields: lambda do |_object_definitions|
+        [
+          {
+            name: "Monitored Event Types",
+            label: "Monitored Event Types",
+            control_type: "multiselect",
+            pick_list: "rdn_event_types",
+            optional: false
+          }
+        ]
+      end
+    }
+  end
+end
 
 {
   title: "RDN Connector SDK",
 
-  connection:   {
+  connection: {
     fields: [
-      { 
-        name: "domain", 
+      {
+        name: "domain",
         label: "Domain",
         hint: "loanpro or your PSaaS name.",
-        optional: false 
+        optional: false
       },
-      { 
-        name: "tenant_id", 
+      {
+        name: "tenant_id",
         label: "Tenant ID",
         hint: "Please enter your Tenant ID here.",
-        optional: false 
+        optional: false
       },
-      { 
-        name: "api_key", 
+      {
+        name: "api_key",
         label: "API Key",
         hint: "You can find your API key in Settings > Company > API > Overview.",
         control_type: "password",
-        optional: false 
+        optional: false
       }
     ],
-    
+
     authorization: {
       type: "custom_auth",
       apply: lambda do |connection|
-        headers("Authorization": "Bearer #{connection['api_key']}")
+        headers(Authorization: "Bearer #{connection["api_key"]}")
         headers("Autopal-Instance-ID": connection["tenant_id"].to_s)
       end
     },
-    
+
     base_uri: lambda do |connection|
-      "https://#{connection['domain']}.simnang.com/api/public/api/1/"
+      "https://#{connection["domain"]}.simnang.com/api/public/api/1/"
     end
   },
 
-  test: lambda { |connection| post('Loans/Autopal.Search()?$top=1') },
+  test: lambda { |connection| post("Loans/Autopal.Search()?$top=1") },
 
   actions: # frozen_string_literal: true
 
 {
   event_types: RdnActions.event_types,
   base_action: RdnActions.base_action
-}
-,
+},
 
-  triggers: {},
+  triggers: # frozen_string_literal: true
+
+{
+  base_trigger: RdnTriggers.updated_case
+},
 
   pick_lists: # frozen_string_literal: true
 
@@ -368,11 +403,11 @@ end
       %w[800 800],
       %w[816 816],
       %w[817 817],
-      %w[818 818]
+      %w[818 818],
+      %w[other other]
     ]
   end
-}
-,
+},
 
-  methods: {}, 
+  methods: {}
 }

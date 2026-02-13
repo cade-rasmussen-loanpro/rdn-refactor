@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Feb 2026 16:45:41 GMT
+      - Fri, 13 Feb 2026 21:29:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -70,5 +70,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"d":{"__metadata":{"uri":"https://beta-loanpro.simnang.com/api/public/api/1/odata.svc/Loans(id=2)","type":"Entity.Loan"},"id":2,"settingsId":2}}'
-  recorded_at: Wed, 11 Feb 2026 16:45:41 GMT
+  recorded_at: Fri, 13 Feb 2026 21:29:52 GMT
 recorded_with: VCR 6.4.0

@@ -22,6 +22,7 @@ module RdnFields
       )
     ]
   end
+  # In RdnFields (e.g. near the top of the module, after common_fields or event_type_fields)
 
   def self.event_type_fields(event_type)
     fields = case event_type
@@ -219,7 +220,19 @@ module RdnActions
         }
       ],
 
-      output_fields: lambda do |_object_definitions, _connection, _config_fields|
+
+      execute: lambda do |_connection, input|
+
+        filter_stmt = f"customFieldId eq {input['rdn_case_number_custom_field_id']} and customFieldValue eq '{input['rdn_case_number']}' and entityType eq 'Entity.LoanSettings'"
+        params = { "$filter": filter_stmt }
+        LoanProApiClient.request(
+          self,
+          method: :get,
+          endpoint: "odata.svc/Loans(#{input['loan_id']})?$select=id,settingsId",
+        )
+      end,
+
+      output_fields: lambda do |_object_definitions, _connection, _input_fields|
         [
           { name: 'loan_id', label: 'Loan Id', type: 'integer', optional: false, sticky: true,
             control_type: 'integer' },
@@ -236,6 +249,32 @@ module RdnActions
   end
 end
 
-# module RdnTriggers
-#   def self.base_trigger
-# end
+module RdnTriggers
+  def self.updated_case
+    {
+      title: "New Event / Update",
+
+      subtitle: "Triggers when a new event is found in RDN.",
+
+      description: lambda do |input, picklist_label|
+        "New update or event on a <span class='provider'>case</span> " \
+        "in <span class='provider'>RDN</span>"
+      end,
+
+      help: "Creates a job when a new event or update is made on a case in " \
+      "RDN. Each new event creates a separate job.",
+
+      input_fields: lambda do |_object_definitions|
+        [
+          {
+            name: 'Monitored Event Types',
+            label: 'Monitored Event Types',
+            control_type: 'multiselect',
+            pick_list: 'rdn_event_types',
+            optional: false
+          }
+        ]
+      end,
+    }
+  end
+end
